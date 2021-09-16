@@ -51,6 +51,8 @@ Install Mongo GUI
 
 Docker commands:
   - docker stop first 4 digits of container id(e.g. docker stop a543)
+  - docker ps
+  - docker ps -a
   - docker rm a543
   - docker images
   - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
@@ -68,3 +70,11 @@ Install Redis
   - docker run -d -p 6379:6379 --name aspnetrun-redis redis
   - docker logs -f aspnetrun-redis
   - docker exec -it aspnetrun-redis /bin/bash
+  
+Redis CLI Commands
+  - redis-cli
+  - ping
+  - set key value
+  - get key
+  - set name john
+  - get name
