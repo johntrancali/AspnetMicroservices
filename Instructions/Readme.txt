@@ -45,8 +45,26 @@ Mongo
 - To remove db, type: db.Products.remove({})
 
 
+Install Mongo GUI
+  - docker run -d -p 3000:3000 mongoclient/mongoclient 
+
+
 Docker commands:
   - docker stop first 4 digits of container id(e.g. docker stop a543)
   - docker rm a543
   - docker images
   - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+  - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down
+  - docker ps -aq
+  - docker stop $(docker ps -aq)
+  - docker rm $(docker ps -aq)
+  - docker rmi $(docker images -q)
+  - docker system prune
+  
+ 
+Install Redis
+  - docker pull redis
+  - docker images
+  - docker run -d -p 6379:6379 --name aspnetrun-redis redis
+  - docker logs -f aspnetrun-redis
+  - docker exec -it aspnetrun-redis /bin/bash
