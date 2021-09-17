@@ -78,3 +78,14 @@ Redis CLI Commands
   - get key
   - set name john
   - get name
+  
+
+Portainer
+  - Login Portainer with info below
+    - Username: admin
+    - Password: Pass@123456789
+  - Select Docker then click Connect
+
+
+Install PostgreSQL
+  - docker pull postgres  
