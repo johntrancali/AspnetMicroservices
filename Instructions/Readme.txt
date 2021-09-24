@@ -56,6 +56,8 @@ Docker commands:
   - docker rm a543
   - docker images
   - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up -d
+  - When there are changes to microservice, use
+      - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml up --build
   - docker-compose -f .\docker-compose.yml -f .\docker-compose.override.yml down
   - docker ps -aq
   - docker stop $(docker ps -aq)
@@ -88,4 +90,17 @@ Portainer
 
 
 Install PostgreSQL
-  - docker pull postgres  
+  - docker pull postgres 
+  
+
+Add Db Migration
+  - Set Ordering.API as Startup project
+  - Make sure Microsoft.EntityFrameworkCore.Tools is installed in Ordering.API
+  - Set Ordering.Infrastructure as Default project in Package Manager Console
+  - Type: add-migration InitialCreate
+
+
+RabbitMQ
+  - username: guest
+  - password: guest
+    
