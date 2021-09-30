@@ -104,3 +104,5 @@ RabbitMQ
   - username: guest
   - password: guest
     
+IdentityServer
+  - https://localhost:5020/.well-known/openid-configuration
