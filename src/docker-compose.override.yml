@@ -30,7 +30,7 @@ services:
   orderdb:
     container_name: orderdb
     environment:
-        SA_PASSWORD: "admin1234"
+        SA_PASSWORD: "Pass@123456789"
         ACCEPT_EULA: "Y"
     restart: always
     ports:
@@ -111,7 +111,7 @@ services:
     container_name: ordering.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=admin1234"
+      - "ConnectionStrings:OrderingConnectionString=Server=orderdb;Database=OrderDb;User Id=sa;Password=Pass@123456789"
       - "EventBusSettings:HostAddress=amqp://guest:guest@rabbitmq:5672"
     depends_on:
       - orderdb
@@ -146,3 +146,16 @@ services:
     ports:
         - "8005:80"
 
+  aspnetrunbasics:
+    container_name: aspnetrunbasics
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - ocelotapigw
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "8006:80"
