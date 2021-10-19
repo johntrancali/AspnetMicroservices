@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Polly;
 using Polly.Extensions.Http;
+using Serilog;
 using System;
 using System.Net.Http;
 
@@ -28,15 +29,21 @@ namespace AspnetRunBasics
 
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IBasketService, BasketService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddHttpClient<IOrderService, OrderService>(c =>
                 c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
-                .AddHttpMessageHandler<LoggingDelegatingHandler>();
+                .AddHttpMessageHandler<LoggingDelegatingHandler>()
+                .AddPolicyHandler(GetRetryPolicy())
+                .AddPolicyHandler(GetCircuitBreakerPolicy());
 
             services.AddRazorPages();
         }
@@ -83,7 +90,7 @@ namespace AspnetRunBasics
                     sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)),
                     onRetry: (exception, retryCount, context) =>
                     {
-                        //Log.Error($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}.");
+                        Log.Error($"Retry {retryCount} of {context.PolicyKey} at {context.OperationKey}, due to: {exception}.");
                     });
         }
 
